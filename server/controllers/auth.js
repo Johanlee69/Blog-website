@@ -1,5 +1,5 @@
 import user from "../models/model.js";
-import bcrypt from 'bcrypt'
+import bcryptjs from 'bcryptjs'
 import jwt from "jsonwebtoken";
 import token from "../models/token.js";
 import 'dotenv/config'
@@ -8,8 +8,8 @@ export const signUPCall = async (req, res) => {
     const { Name, username, password } = req.body
     const checkUserName = await user.findOne({ username });
     if (checkUserName) return res.status(400).json({message : `${username} already exist`})
-    const salt = await bcrypt.genSalt(5);
-    const hashedpassword = await bcrypt.hash(password, salt);
+    const salt = await bcryptjs.genSalt(5);
+    const hashedpassword = await bcryptjs.hash(password, salt);
     const newUser = new user({
         Name,
         username,
@@ -26,7 +26,7 @@ export const LogInCall = async (req, res) => {
     const findUSer = await user.findOne({ username })
     if (!findUSer) return res.status(401).json({ message: "Invalid user" })
     try {
-        const match = await bcrypt.compare(password, findUSer.password)
+        const match = await bcryptjs.compare(password, findUSer.password)
         if (!match) return res.status(401).json({ message: "Invalid password" })
         const Token = jwt.sign(findUSer.toJSON(), process.env.SCERET_KEY, { expiresIn: '15m' });
         const RefreshToken = jwt.sign(findUSer.toJSON(), process.env.REFRESH_SECRET_KEY);
