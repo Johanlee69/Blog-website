@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 // Local development URL
-export const baseURL = 'http://localhost:5000';
+export const baseURL = 'https://blog-website-server-h4cy.onrender.com';
 
 const api = axios.create({
     baseURL: baseURL
