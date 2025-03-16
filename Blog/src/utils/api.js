@@ -1,5 +1,6 @@
 import axios from 'axios';
 
+// Local development URL
 export const baseURL = 'http://localhost:5000';
 
 const api = axios.create({

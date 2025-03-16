@@ -20,7 +20,18 @@ const storage = multer.diskStorage({
     }
 })
 const upload = multer({ storage: storage })
-app.use(cors());
+
+// Enhanced CORS configuration
+app.use(cors({
+    origin: '*', // Allow all origins
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
+    credentials: true
+}));
+
+// Add a pre-flight handler for all routes
+app.options('*', cors());
+
 app.use(express.json())
 app.use('/uploads', express.static('uploads')) 
 data_base();
