@@ -61,7 +61,6 @@ const Like_And_Comment = ({ postId, disableClick = false }) => {
         }
     };
 
-    // Use a more compact layout if this is in a card
     if (disableClick) {
         return (
             <div className="flex items-center space-x-3 text-sm">
